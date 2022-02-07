@@ -1,0 +1,62 @@
+# Крестики нолики
+line = [0, 1, 2, 3, 4, 5, 6, 7, 8]
+available_moves = line.copy()
+turn = 1
+
+
+def print_fild():
+    print(line[0], '|', line[1], '|', line[2])
+    print('---------')
+    print(line[3], '|', line[4], '|', line[5])
+    print('---------')
+    print(line[6], '|', line[7], '|', line[8])
+    print()
+
+
+def make_move(ind):
+    line[ind] = el
+    available_moves.remove(ind)
+    print_fild()
+
+
+def check_winner(el):
+    # Check the lines
+    if line[0:3] == [el, el, el]:
+        return 1
+    elif line[3:6] == [el, el, el]:
+        return 1
+    elif line[6:] == [el, el, el]:
+        return 1
+    # Check the column
+    if line[0] == el and line[3] == el and line[6] == el:
+        return 1
+    elif line[1] == el and line[4] == el and line[7] == el:
+        return 1
+    elif line[2] == el and line[5] == el and line[8] == el:
+        return 1
+#    Check diagonals
+    if line[0] == el and line[4] == el and line[8] == el:
+        return 1
+    elif line[2] == el and line[4] == el and line[6] == el:
+        return 1
+    else:
+        return 0
+
+
+print_fild()
+while len(available_moves) != 0:
+    # переключаем игрока через чёт\нечет
+    turn += 1
+    if turn % 2 == 0:
+        el = 'X'
+    else:
+        el = 'O'
+    print('Available moves: ', available_moves)
+    make_move(int(input(f'Player "{el}" ')))
+    if check_winner(el) == 1:
+        print(f'Player "{el}" is the Winner!')
+        available_moves.clear()
+        break
+    if len(available_moves) == 0:
+        print('No winner')
+        break
